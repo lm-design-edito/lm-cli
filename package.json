@@ -18,7 +18,7 @@
     "prepublishOnly": "npm run build:src && npm run exec:pre-publish"
   },
   "devDependencies": {
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.2.1",
     "@types/prompts": "^2.4.9",
     "@types/semver": "^7.7.0",
     "esbuild": "^0.25.8",
@@ -27,7 +27,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@design-edito/tools": "^0.1.73",
+    "@design-edito/tools": "^0.2.0",
     "commander": "^14.0.0",
     "prompts": "^2.4.2"
   },
