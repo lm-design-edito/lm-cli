@@ -5,7 +5,7 @@ import path from 'node:path'
 import { spawn } from 'node:child_process'
 import { program } from 'commander'
 import prompts from 'prompts'
-import { Files } from '@design-edito/tools/node/files/index.js'
+import { readWrite as readWriteFile } from '@design-edito/tools/node/files/index.js'
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -75,7 +75,7 @@ async function makeReact () {
 
   // Custom project name
   const packageJsonPath = path.join(defaultTargetPath, 'package.json')
-  await Files.readWrite(packageJsonPath, rawContent => {
+  await readWriteFile(packageJsonPath, rawContent => {
     const content = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
@@ -129,7 +129,7 @@ async function makeExpress () {
 
   // Custom project name in package.json
   const packageJsonPath = path.join(defaultTargetPath, 'package.json')
-  await Files.readWrite(packageJsonPath, rawContent => {
+  await readWriteFile(packageJsonPath, rawContent => {
     const content = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
@@ -138,7 +138,7 @@ async function makeExpress () {
 
   // Custom project name in src/www/index.ts
   const binStartTsPath = path.join(defaultTargetPath, 'src/www/index.ts')
-  await Files.readWrite(binStartTsPath, rawContent => {
+  await readWriteFile(binStartTsPath, rawContent => {
     const originalContent = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
@@ -183,7 +183,7 @@ async function makeExpressApi () {
 
   // Custom project name in package.json
   const packageJsonPath = path.join(defaultTargetPath, 'package.json')
-  await Files.readWrite(packageJsonPath, rawContent => {
+  await readWriteFile(packageJsonPath, rawContent => {
     const content = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
@@ -192,7 +192,7 @@ async function makeExpressApi () {
 
   // Custom project name in src/www/index.ts
   const binStartTsPath = path.join(defaultTargetPath, 'src//www/index.ts')
-  await Files.readWrite(binStartTsPath, rawContent => {
+  await readWriteFile(binStartTsPath, rawContent => {
     const originalContent = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
