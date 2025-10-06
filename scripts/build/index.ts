@@ -1,4 +1,5 @@
 import process from 'node:process'
+import { spawn } from 'node:child_process'
 import path from 'node:path'
 import { existsSync, promises as fs } from 'node:fs'
 import esbuild from 'esbuild'
@@ -7,6 +8,26 @@ import { listSubdirectoriesIndexes } from '../_utils/index.js'
 import { exec, execSync } from 'node:child_process'
 
 const libToBuild = process.argv[2]
+const entryPoints = await listSubdirectoriesIndexes(SRC, ['.js', '.ts'])
+const filteredEntryPoints = entryPoints.filter(entryPointPath => entryPointPath.includes(libToBuild ?? ''))
+const actualEntryPoints = filteredEntryPoints.length === 0 ? entryPoints : filteredEntryPoints
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Typechecks
+ * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * */
+await new Promise(resolve => {
+  const prcss = spawn('npx', ['tsc', '--noEmit', '-p', SRC])
+  prcss.stdout?.on('data', data => console.log(data.toString().trim()))
+  prcss.stderr?.on('data', data => console.log(data.toString().trim()))
+  prcss.on('error', err => console.error(err.toString().trim()))
+  prcss.on('close', code => {
+    if (code === 0) return resolve(true)
+    console.error('Typechecks failed')
+    throw new Error('Typechecks failed')
+  })
+})
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -14,9 +35,6 @@ const libToBuild = process.argv[2]
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-const entryPoints = await listSubdirectoriesIndexes(SRC, ['.js', '.ts'])
-const filteredEntryPoints = entryPoints.filter(entryPointPath => entryPointPath.includes(libToBuild ?? ''))
-const actualEntryPoints = filteredEntryPoints.length === 0 ? entryPoints : filteredEntryPoints
 await Promise.all(actualEntryPoints.map(async indexPath => {
   return await new Promise((resolve, reject) => {
     const parentDir = path.basename(path.dirname(indexPath))
