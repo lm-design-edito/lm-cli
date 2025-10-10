@@ -20,22 +20,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.11.30",
-    "@types/react": "^18.2.72",
-    "@types/react-dom": "^18.2.22",
-    "concurrently": "^8.2.2",
-    "http-server": "^14.1.1",
-    "typescript": "^5.4.3",
-    "esbuild": "^0.20.2",
+    "@types/node": "^24.7.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "concurrently": "^9.2.1",
+    "esbuild": "^0.25.10",
     "esbuild-plugin-inline-image": "^0.0.9",
     "esbuild-sass-plugin": "^3.2.0",
+    "http-server": "^14.1.1",
     "postcss": "^8.4.38",
     "postcss-modules": "^6.0.0",
-    "sass": "^1.74.1"
+    "sass": "^1.74.1",
+    "typescript": "^5.4.3"
   },
   "dependencies": {
     "preact": "^10.20.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }

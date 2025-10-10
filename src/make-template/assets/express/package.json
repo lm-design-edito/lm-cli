@@ -17,7 +17,7 @@
     "cors": "^2.8.5",
     "debug": "^4.4.0",
     "esbuild": "^0.25.0",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "morgan": "^1.10.0",
     "typescript": "^5.7.3"
   },
@@ -27,7 +27,7 @@
     "@types/debug": "^4.1.12",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^22.13.4",
+    "@types/node": "^24.7.1",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^9.1.2"
   }
