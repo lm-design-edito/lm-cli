@@ -9,7 +9,7 @@
     "build:public": "cp -r public/* dist",
     "build:src": "npm run build:scripts && node .scripts/build/index.js",
     "build:src:preact": "PREACT=true npm run build:src",
-    "watch:public": "npx chokidar-cli 'public/**/*' -c 'npm run build:public'",
+    "watch:public": "npm run build:public && npx chokidar-cli 'public/**/*' -c 'npm run build:public'",
     "watch:src": "WATCH=true npm run build:src",
     "watch:src:preact": "PREACT=true npm run watch:src",
     "make:dist": "mkdir -p dist",
