@@ -27,7 +27,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@design-edito/tools": "^0.2.11",
+    "@design-edito/tools": "^0.2.14",
     "commander": "^14.0.1",
     "prompts": "^2.4.2"
   },
