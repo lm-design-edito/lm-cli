@@ -14,8 +14,9 @@
     "build:scripts": "npx tsc -p scripts/tsconfig.json",
     "exec:build": "node .scripts/build/index.js",
     "exec:pre-publish": "node .scripts/pre-publish/index.js",
-    "build:src": "npm run build:scripts && rm -rf build && npm run make:build && npm run exec:build",
-    "prepublishOnly": "npm run build:src && npm run exec:pre-publish"
+    "build:src": "rm -rf build && npm run make:build && npm run exec:build",
+    "build": "npm run build:scripts && npm run build:src",
+    "prepublishOnly": "npm run build && npm run exec:pre-publish"
   },
   "devDependencies": {
     "@types/node": "^25.0.3",
