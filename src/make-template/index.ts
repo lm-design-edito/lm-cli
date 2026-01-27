@@ -5,7 +5,7 @@ import path from 'node:path'
 import { spawn } from 'node:child_process'
 import { program } from 'commander'
 import prompts from 'prompts'
-import { readWrite as readWriteFile } from '@design-edito/tools/node/files/index.js'
+import { readWrite as readWriteFile } from '@design-edito/tools/node/files/read-write/index.js'
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -75,7 +75,7 @@ async function makeReact () {
 
   // Custom project name
   const packageJsonPath = path.join(defaultTargetPath, 'package.json')
-  await readWriteFile(packageJsonPath, rawContent => {
+  await readWriteFile<string>(packageJsonPath, (rawContent: string | Buffer) => {
     const content = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
@@ -86,7 +86,11 @@ async function makeReact () {
       ...contentObj
     }
     return `${JSON.stringify(newContentObj, null, 2)}\n`
-  }, { encoding: 'utf-8' })
+  }, {
+    readOptions: {
+      encoding: 'utf-8'
+    }
+  })
 
   // Install deps
   const npmISubprocess = spawn(`cd ${defaultTargetPath} && npm i`, { stdio: 'inherit', shell: true })
@@ -129,21 +133,29 @@ async function makeExpress () {
 
   // Custom project name in package.json
   const packageJsonPath = path.join(defaultTargetPath, 'package.json')
-  await readWriteFile(packageJsonPath, rawContent => {
+  await readWriteFile<string>(packageJsonPath, (rawContent: string | Buffer) => {
     const content = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
     return content.replaceAll('<<@design-edito/cli----replace-with-name>>', projectName)
-  }, { encoding: 'utf-8' })
+  }, {
+    readOptions: {
+      encoding: 'utf-8'
+    }
+  })
 
   // Custom project name in src/www/index.ts
   const binStartTsPath = path.join(defaultTargetPath, 'src/www/index.ts')
-  await readWriteFile(binStartTsPath, rawContent => {
+  await readWriteFile<string>(binStartTsPath, (rawContent: string | Buffer) => {
     const originalContent = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
     return originalContent.replaceAll('<<@design-edito/cli----replace-with-name>>', projectName)
-  }, { encoding: 'utf-8' })
+  }, {
+    readOptions: {
+      encoding: 'utf-8'
+    }
+  })
 
   // Install deps
   const npmISubprocess = spawn(`cd ${defaultTargetPath} && npm i`, { stdio: 'inherit', shell: true })
@@ -183,21 +195,29 @@ async function makeExpressApi () {
 
   // Custom project name in package.json
   const packageJsonPath = path.join(defaultTargetPath, 'package.json')
-  await readWriteFile(packageJsonPath, rawContent => {
+  await readWriteFile<string>(packageJsonPath, (rawContent: string | Buffer) => {
     const content = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
     return content.replaceAll('<<@design-edito/cli----replace-with-name>>', projectName)
-  }, { encoding: 'utf-8' })
+  }, {
+    readOptions: {
+      encoding: 'utf-8'
+    }
+  })
 
   // Custom project name in src/www/index.ts
   const binStartTsPath = path.join(defaultTargetPath, 'src//www/index.ts')
-  await readWriteFile(binStartTsPath, rawContent => {
+  await readWriteFile<string>(binStartTsPath, (rawContent: string | Buffer) => {
     const originalContent = typeof rawContent === 'string'
       ? rawContent
       : rawContent.toString()
     return originalContent.replaceAll('<<@design-edito/cli----replace-with-name>>', projectName)
-  }, { encoding: 'utf-8' })
+  }, {
+    readOptions: {
+      encoding: 'utf-8'
+    }
+  })
 
   // Install deps
   const npmISubprocess = spawn(`cd ${defaultTargetPath} && npm i`, { stdio: 'inherit', shell: true })

@@ -1,6 +1,6 @@
 import { program } from 'commander'
 import { isInDirectory } from '@design-edito/tools/node/files/is-in-directory/index.js'
-import { Subpaths } from '@design-edito/tools/node/files/subpaths/index.js'
+import * as Subpaths from '@design-edito/tools/node/files/subpaths/index.js'
 
 const CWD = process.cwd()
 
