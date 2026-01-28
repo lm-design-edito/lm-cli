@@ -20,11 +20,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^24.7.1",
+    "@types/node": "^25.0.10",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
     "concurrently": "^9.2.1",
-    "esbuild": "^0.25.10",
+    "esbuild": "^0.27.2",
     "esbuild-plugin-inline-image": "^0.0.9",
     "esbuild-sass-plugin": "^3.2.0",
     "http-server": "^14.1.1",

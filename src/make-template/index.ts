@@ -26,11 +26,16 @@ program
   .action(makeExpressApi)
 
 program
+  .command('node-ts')
+  .description('make node + typescript project structure')
+  .action(makeNodeTs)
+
+program
   .command('html')
   .description('make simple html project structure')
   .action(makeHtml)
 
-program
+  program
   .command('react')
   .description('make react + typescript project structure')
   .action(makeReact)
@@ -67,6 +72,64 @@ async function makeReact () {
 
   // Copy
   await fs.cp(reactTemplatePath, defaultTargetPath, { recursive: true })
+  const { projectName } = await prompts({
+    name: 'projectName',
+    message: 'Project name ? (for package.json name field)',
+    type: 'text'
+  })
+
+  // Custom project name
+  const packageJsonPath = path.join(defaultTargetPath, 'package.json')
+  await readWriteFile<string>(packageJsonPath, (rawContent: string | Buffer) => {
+    const content = typeof rawContent === 'string'
+      ? rawContent
+      : rawContent.toString()
+    const contentObj = JSON.parse(content) as Record<string, string>
+    delete contentObj.name
+    const newContentObj = {
+      name: projectName,
+      ...contentObj
+    }
+    return `${JSON.stringify(newContentObj, null, 2)}\n`
+  }, {
+    readOptions: {
+      encoding: 'utf-8'
+    }
+  })
+
+  // Install deps
+  const npmISubprocess = spawn(`cd ${defaultTargetPath} && npm i`, { stdio: 'inherit', shell: true })
+  await new Promise((resolve, reject) => {
+    npmISubprocess.on('exit', () => resolve(true))
+    npmISubprocess.on('error', () => reject(false))
+  })
+
+  // Rename project
+  const targetPath = path.join(CWD, projectName)
+  await fs.rename(defaultTargetPath, targetPath)
+
+  // Rename gitignore
+  await fs.rename(
+    path.join(targetPath, 'gitignore'),
+    path.join(targetPath, '.gitignore')
+  )
+}
+
+/* * * * * * * * * * * * * * * * * * *
+ *
+ * NODE TS
+ *
+ * * * * * * * * * * * * * * * * * * */
+async function makeNodeTs () {
+  const nodeTemplatePath = path.join(__dirname, 'assets/node-ts')
+  if (!existsSync(nodeTemplatePath)) {
+    console.error(`Could not find the template to copy at ${nodeTemplatePath}`)
+    return process.exit(1)
+  }
+  const defaultTargetPath = path.join(CWD, 'node-template')
+
+  // Copy
+  await fs.cp(nodeTemplatePath, defaultTargetPath, { recursive: true })
   const { projectName } = await prompts({
     name: 'projectName',
     message: 'Project name ? (for package.json name field)',
