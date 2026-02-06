@@ -45,11 +45,12 @@ program
       if (!commitRes.success) throw process.exit(1)
     }
     await promptContinue('Push now?', true)
-    await spawner(
+    const pushRes = await spawner(
       `Pushing to ${remote}/${branch}`,
       'git',
       ['push', remote, branch, ...rest ?? []]
     )
+    if (!pushRes.success) throw process.exit(1)
   })
 
 program.parse(process.argv)
