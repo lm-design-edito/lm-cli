@@ -53,7 +53,7 @@ program
       )
       if (!commitRes.success) throw process.exit(1)
     }
-    await promptContinue('push now?', true)
+    await promptContinue('Push now?', true)
     await spawner(
       `Pushing to ${remote}/${branch}`,
       'git',
