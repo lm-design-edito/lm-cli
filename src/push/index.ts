@@ -54,5 +54,3 @@ program
   })
 
 program.parse(process.argv)
-
-// test2
