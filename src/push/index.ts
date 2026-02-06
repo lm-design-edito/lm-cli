@@ -1,4 +1,3 @@
-import { spawn } from 'node:child_process'
 import { program } from 'commander'
 import { spawner } from '@design-edito/tools/node/process/spawner/index.js'
 import { promptContinue } from '@design-edito/tools/node/process/prompt-continue/index.js'
@@ -21,14 +20,6 @@ program
     rest: string[] | undefined,
     options: { pull?: boolean },
   ) => {
-    console.log({
-      remote,
-      branch,
-      message,
-      files,
-      rest,
-      options
-    })
     if (options.pull) {
       const pullRes = await spawner(
         `Pulling from ${remote}/${branch}...`,
