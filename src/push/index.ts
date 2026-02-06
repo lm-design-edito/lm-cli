@@ -56,7 +56,7 @@ program
     await promptContinue('push now?', true)
     await spawner(
       `Pushing to ${remote}/${branch}`,
-      'git ',
+      'git',
       ['push', remote, branch, ...rest ?? []]
     )
   })
