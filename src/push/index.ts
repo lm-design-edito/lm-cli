@@ -40,7 +40,7 @@ program
       const commitRes = await spawner(
         `Commiting with message "${message}"...`,
         'git',
-        ['commit', '-m', message]
+        ['commit', '-m', `"${message}"`]
       )
       if (!commitRes.success) throw process.exit(1)
     }
