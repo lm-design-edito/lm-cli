@@ -7,7 +7,7 @@ program
   .allowUnknownOption(true)
   .arguments('[args...]')
   .action((args: string[]) => {
-    const finalArgs = args.length > 0 ? args.join(' ') : '.'
+    const finalArgs = args.length > 0 ? args : ['.']
     spawn(
       'git',
       ['-c', 'color.ui=always', 'add', ...finalArgs],
