@@ -4,7 +4,7 @@ The `@design-edito/cli` command-line tool. Each subdirectory of `src/` whose `in
 
 ## Git workflow
 
-- Commit message shape: `<scope>: <lowercase description>`. Scope is the area touched — a command or top-level concern (e.g. `packages`, `tsconfig`, `src`, `diff`, `make-template`). The description after the colon is lowercase and terse: a few words, not a full punctuated sentence. Multiple concerns can be joined with `+` or `&`.
+- Commit message shape: `<scope> - <lowercase description>`. Scope is the area touched — a command or top-level concern (e.g. `packages`, `tsconfig`, `src`, `diff`, `make-template`). The description after the dash is lowercase and terse: a few words, not a full punctuated sentence. Multiple scopes can be joined with `&` or comma-separated.
 - Do not add a `Co-Authored-By: Claude` trailer to commits in this repo — use a plain commit message.
 - Only run `git commit` when asked, and stage explicitly (`git add <paths>`) only the files relevant to that commit. Never run `git push` or `git pull` — the user handles pushing and pulling themselves.
 - Before committing dependency or config bumps, run `npm run build` and confirm it is green — do not commit a red build.
