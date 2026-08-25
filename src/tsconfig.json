@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "strict": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": ["ESNext"],
@@ -9,7 +8,7 @@
     "target": "ESNext",
     "outDir": "../build",
     "declaration": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "rootDir": ".",
     "noUncheckedIndexedAccess": true,
   },

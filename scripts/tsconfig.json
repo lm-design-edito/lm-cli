@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
     "strict": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "../.scripts",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "ESNext",
     "lib": ["ESNext"],
     "rootDir": ".",
