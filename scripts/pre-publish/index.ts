@@ -3,7 +3,7 @@ import path from 'node:path'
 import { exec, execSync } from 'node:child_process'
 import prompts from 'prompts'
 import semver from 'semver'
-import Git from 'simple-git'
+import { simpleGit } from 'simple-git'
 import { PKG_JSON, BUILD_PKG_JSON, BUILD } from '../_config/index.js'
 import { listSubdirectoriesIndexes } from '../_utils/index.js'
 
@@ -13,7 +13,7 @@ import { listSubdirectoriesIndexes } from '../_utils/index.js'
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-const git = Git()
+const git = simpleGit()
 const isClean = (await git.status()).isClean()
 if (!isClean) {
   console.error('Git working directory must be clean.')
