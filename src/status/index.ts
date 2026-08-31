@@ -37,7 +37,11 @@ program
     // Root: raw `git status`, exactly like running it by hand (its "fatal: not a
     // git repository" is printed verbatim when we're not in a repo).
     const rootCode = await runGitStatus(CWD, ctx.gitArgs)
-    if (depth > 0) await recurse(CWD, 0, ctx)
+    if (depth > 0) {
+      console.log('')
+      await recurse(CWD, 0, ctx)
+      console.log('')
+    }
     return process.exit(depth === 0 ? rootCode : 0)
   })
 
@@ -45,7 +49,7 @@ program.parse(process.argv)
 
 /**
  * Walks `dir` at recursion level `currentDepth`, printing a `git status` for
- * every git repository found and a single grey line for every other directory,
+ * every git repository found and a one-line marker for every other directory,
  * then recurses into child directories until `ctx.depth` is reached.
  */
 async function recurse (dir: string, currentDepth: number, ctx: Ctx): Promise<void> {
@@ -53,10 +57,11 @@ async function recurse (dir: string, currentDepth: number, ctx: Ctx): Promise<vo
   if (currentDepth > 0) {
     const rel = path.relative(CWD, dir) || '.'
     if (await isRepoRoot(dir)) {
-      console.log(`\n${styles.info(rel)}`)
+      console.log(`\n${styles.info(`./${rel}`)}`)
       await runGitStatus(dir, ctx.gitArgs)
+      console.log('')
     } else {
-      console.log(styles.light(`${rel} — not a git repository`))
+      console.log(`${styles.info(`./${rel}`)} ${styles.light('not a git repository')}`)
     }
   }
 
