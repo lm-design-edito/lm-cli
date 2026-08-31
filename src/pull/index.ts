@@ -1,17 +1,27 @@
-import { spawn } from 'child_process'
+import process from 'node:process'
 import { program } from 'commander'
+import { styles } from '@design-edito/tools/agnostic/misc/logs/styles/index.js'
+import { addRecursionOptions, parseRecursionOptions, recursiveGitCommand } from '../_git-recursion.js'
 
 program
   .name('@design-edito/pull')
-  .description('Shorthand for git pull with arguments forwarding')
+  .description('Shorthand for git pull, with optional recursion into sub directories')
   .allowUnknownOption(true)
-  .arguments('[args...]')
-  .action((args: string[]) => {
-    spawn(
-      'git',
-      ['-c', 'color.ui=always', 'pull', ...args],
-      { stdio: 'inherit' }
-    ).on('exit', code => process.exit(code ?? 0))
+  .allowExcessArguments(true)
+  .argument('[args...]', 'arguments forwarded to git pull')
+  .action(async (args: string[] | undefined, options: { depth: string, maxChildren: string }) => {
+    const parsed = parseRecursionOptions(options)
+    if (parsed === null) {
+      console.error(styles.error('--depth and --max-children must be non-negative integers'))
+      return process.exit(1)
+    }
+    const code = await recursiveGitCommand('pull', {
+      cwd: process.cwd(),
+      gitArgs: args ?? [],
+      ...parsed
+    })
+    return process.exit(code)
   })
 
+addRecursionOptions(program)
 program.parse(process.argv)
