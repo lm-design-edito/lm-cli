@@ -97,7 +97,7 @@ async function walk (dir: string, currentDepth: number, ctx: Ctx): Promise<void>
 
   if (ctx.maxChildren > 0 && childDirs.length > ctx.maxChildren) {
     const rel = path.relative(ctx.cwd, dir) || '.'
-    console.log(styles.warning(`${rel} — ${childDirs.length} sub directories, skipped (--max-children ${ctx.maxChildren})`))
+    console.log(styles.warning(`  ${childDirs.length} sub directories, skipped (--max-children ${ctx.maxChildren})`))
     return
   }
 
