@@ -2,12 +2,13 @@
 
 The `@design-edito/cli` command-line tool. Each subdirectory of `src/` whose `index.ts` is discovered becomes a standalone CLI command: it is bundled with esbuild, given a `#!/usr/bin/env node` shebang and made executable under `build/`.
 
-## Git workflow
+Shared conventions — commits, code style, import order — live in the root
+[`../CLAUDE.md`](../CLAUDE.md) and apply here. This file only adds what is specific
+to this repo.
 
-- Commit message shape: `<scope> - <lowercase description>`. Scope is the area touched — a command or top-level concern (e.g. `packages`, `tsconfig`, `src`, `diff`, `make-template`). The description after the dash is lowercase and terse: a few words, not a full punctuated sentence. Multiple scopes can be joined with `&` or comma-separated.
-- Do not add a `Co-Authored-By: Claude` trailer to commits in this repo — use a plain commit message.
-- Only run `git commit` when asked, and stage explicitly (`git add <paths>`) only the files relevant to that commit. Never run `git push` or `git pull` — the user handles pushing and pulling themselves.
-- Before committing dependency or config bumps, run `npm run build` and confirm it is green — do not commit a red build.
+Commit scope is a command or a top-level concern (e.g. `packages`, `tsconfig`,
+`src`, `diff`, `make-template`). Before committing a dependency or config bump,
+run `npm run build` and confirm it is green.
 
 ## Build assets: `.build` and `.publish` hooks
 
@@ -32,7 +33,3 @@ If either file is missing, or transpilation fails, the orchestrator logs, skips,
 ### Conventions for hook tsconfigs
 
 Keep these configs modern (they are typechecked by the IDE and would break on TypeScript 7): no `baseUrl` (unused — hooks import only `node:*`), and `"moduleResolution": "bundler"` rather than the deprecated node10 `"Node"`. Mirror `src/tsconfig.json`.
-
-## TODO
-
-- [ ] **Modernize the `make-template` scaffolding tsconfigs.** The templates under `src/make-template/assets/` are shipped verbatim into user-scaffolded projects, and several still use the deprecated `baseUrl` + node10 `"moduleResolution": "Node"` — so every generated project inherits the same TypeScript 7 deprecation (and eventual breakage). Update them (checking per-template whether any imports actually rely on `baseUrl` before removing it, and picking `nodenext` vs `bundler` per project type): `express/src/tsconfig.json`, `express-api/src/tsconfig.json`, `node-ts/src/tsconfig.json`, `react/src/tsconfig.json`, `react/scripts/tsconfig.json`.
