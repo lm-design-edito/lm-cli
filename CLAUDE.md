@@ -10,6 +10,17 @@ Commit scope is a command or a top-level concern (e.g. `packages`, `tsconfig`,
 `src`, `diff`, `make-template`). Before committing a dependency or config bump,
 run `npm run build` and confirm it is green.
 
+## Where new code goes
+
+**This repo is meant to be a CLI orchestrator, nothing more:** argument parsing,
+prompts, output formatting, exit codes. The business logic it drives belongs in
+`lm-tools`, and is consumed from there.
+
+That is not yet true of the existing commands — several carry their own logic —
+but it is the direction. So a new command wires up `@design-edito/tools`
+functions; when the function it needs does not exist, write it in `lm-tools` and
+call it, rather than growing the logic here.
+
 ## Build assets: `.build` and `.publish` hooks
 
 A command may ship a sibling `assets/` folder (copied verbatim into `build/<command>/assets/` at build time). Inside such an `assets/` folder, two optional folders act as **generator hooks** that produce derived asset files, then erase themselves so they never ship:
