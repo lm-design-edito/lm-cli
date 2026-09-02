@@ -92,8 +92,17 @@ async function walk (dir: string, currentDepth: number, ctx: Ctx): Promise<void>
     .sort((a, b) => a.localeCompare(b))
 
   // Inside a repository, honour .gitignore — drops node_modules, dist, build…
+  // An ignored directory that is itself a repository is kept, though: a workspace
+  // routinely gitignores the very repositories it holds, and those are precisely
+  // what this command is looking for.
   const ignored = await ignoredChildren(dir, childDirs)
-  if (ignored.size > 0) childDirs = childDirs.filter(name => !ignored.has(name))
+  if (ignored.size > 0) {
+    const ignoredNonRepos = new Set<string>()
+    await Promise.all([...ignored].map(async name => {
+      if (!await isRepoRoot(path.join(dir, name))) ignoredNonRepos.add(name)
+    }))
+    childDirs = childDirs.filter(name => !ignoredNonRepos.has(name))
+  }
 
   if (ctx.maxChildren > 0 && childDirs.length > ctx.maxChildren) {
     const rel = path.relative(ctx.cwd, dir) || '.'
