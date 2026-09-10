@@ -14,4 +14,26 @@ coding conventions, and the root [`../CLAUDE.md`](../CLAUDE.md) for the shared o
 
 ## Chantiers
 
-- [ ] **Modernize the `make-template` scaffolding tsconfigs.** The templates under `src/make-template/assets/` are shipped verbatim into user-scaffolded projects, and several still use the deprecated `baseUrl` + node10 `"moduleResolution": "Node"` — so every generated project inherits the same TypeScript 7 deprecation (and eventual breakage). Update them (checking per-template whether any imports actually rely on `baseUrl` before removing it, and picking `nodenext` vs `bundler` per project type): `express/src/tsconfig.json`, `express-api/src/tsconfig.json`, `node-ts/src/tsconfig.json`, `react/src/tsconfig.json`, `react/scripts/tsconfig.json`.
+Après lm-link. Dans l'ordre.
+
+1. **Rapatrier la logique métier dans lm-tools.** lm-cli est censé orchestrer des
+   fonctions de `@design-edito/tools`, pas en porter — c'est déjà ce que dit le
+   README du workspace. Chaque commande devrait se réduire à sa coquille : lire des
+   arguments, appeler une fonction publiée, rendre un résultat. Le tri se fait
+   commande par commande.
+
+2. **Remettre les templates de `make-template` d'aplomb.** Ils ont vieilli, et ils
+   sont livrés tels quels dans les projets échafaudés — donc chaque défaut se
+   propage. Le plus visible : plusieurs `tsconfig.json` gardent `baseUrl` et le
+   `"moduleResolution": "Node"` de node10, dépréciés et voués à casser en TypeScript
+   7. Vérifier par template si un import s'appuie réellement sur `baseUrl` avant de
+   le retirer, et choisir `nodenext` ou `bundler` selon le type de projet :
+   `express/src/tsconfig.json`, `express-api/src/tsconfig.json`,
+   `node-ts/src/tsconfig.json`, `react/src/tsconfig.json`,
+   `react/scripts/tsconfig.json`. Le reste des templates est à relire dans la foulée.
+
+3. **Automatiser la publication via le CMS maison.** Le gros morceau, et ce à quoi
+   une bonne partie du reste de l'année est destinée : des outils pour interagir
+   programmatiquement avec le CMS, et publier notre production sans passer par
+   l'interface. **Une phase de conception est à mener avant d'écrire quoi que ce
+   soit** — le périmètre sera clarifié à ce moment-là, pas ici.
