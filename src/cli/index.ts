@@ -1,8 +1,8 @@
-import process from 'node:process'
-import { promises as fs } from 'node:fs'
-import url from 'node:url'
-import path from 'node:path'
 import { spawn } from 'node:child_process'
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
+import url from 'node:url'
 import { program } from 'commander'
 
 const __filename = url.fileURLToPath(import.meta.url)
@@ -15,7 +15,7 @@ program
   .action(async options => 'version' in options
     ? await printVersion()
     : program.help())
-  
+
 program
   .command('list')
   .description('list all the available commands')
@@ -31,7 +31,7 @@ subCommands.forEach(subCommand => {
   program
     .command(subCommand, { hidden: true })
     .allowUnknownOption(true)
-    .action(async (...args) => {
+    .action(async () => {
       const [_nodePath, _thisPath, targetCommand, ...forwardedArgs] = process.argv
       if (targetCommand === undefined) return program.help()
       const commandsList = await listCommands()
