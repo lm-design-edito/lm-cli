@@ -27,7 +27,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@design-edito/tools": "^0.5.0",
+    "@design-edito/tools": "^0.7.0",
     "commander": "^15.0.0",
     "prompts": "^2.4.2",
     "simple-git": "^3.33.0"
